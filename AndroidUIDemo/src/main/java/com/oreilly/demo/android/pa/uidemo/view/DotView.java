@@ -62,8 +62,16 @@ public class DotView extends View {
         paint.setStyle(Style.STROKE);
         paint.setColor(hasFocus() ? Color.BLUE : Color.GRAY);
         canvas.drawRect(0, 0, getWidth() - 1, getHeight() -1, paint);
+        //extract this loop to a separate method.
+        for (int i = 1; i <= 3; i++){
+            canvas.drawLine(0, getHeight()/4*i, getWidth(), getHeight()/4*i, paint);
+        }
+        for (int i = 1; i <= 3; i++){
+            canvas.drawLine(getWidth()/4*i, 0, getWidth()/4*i, getHeight(), paint);
+        }
 
-        if (null == dots) { return; }
+
+        /*if (null == dots) { return; }
 
         paint.setStyle(Style.FILL);
         for (Dot dot : dots.getDots()) {
@@ -73,6 +81,6 @@ public class DotView extends View {
                 dot.getY(),
                 dot.getDiameter(),
                 paint);
-        }
+        }*/
     }
 }

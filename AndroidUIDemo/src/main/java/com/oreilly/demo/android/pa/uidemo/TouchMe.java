@@ -101,6 +101,38 @@ public class TouchMe extends Activity {
         }
     }
 
+    // create class for monster generation.
+    private final class MonsterGenerator implements Runnable {
+        final Dots dots;
+        //initialize monsters.
+        final DotView view;
+        final int color;
+
+        private final Handler hdlr = new Handler();
+        private final Runnable makeMonsters = new Runnable() {
+            @Override public void run() { makeDot(dots, view, color); }
+        };//change second part
+
+        private volatile boolean done;
+
+        MonsterGenerator(Dots dots, DotView view, int color) {
+            this.dots = dots;
+            this.view = view;
+            this.color = color;
+        }
+
+        public void done() { done = true; }
+
+        @Override
+        public void run() { //add creation of monsters here.
+            while (!done) {
+                hdlr.post(makeMonsters);
+                //use onTick event instead of sleep... sleep could work too.
+                try { Thread.sleep(1000); }
+                catch (InterruptedException e) { }
+            }
+        }
+    }
     /** Generate new dots, one per second. */
     private final class DotGenerator implements Runnable {
         final Dots dots;
@@ -123,11 +155,13 @@ public class TouchMe extends Activity {
         public void done() { done = true; }
 
         @Override
-        public void run() {
+        public void run() { //add creation of monsters here.
             while (!done) {
                 hdlr.post(makeDots);
+                //makeMonsters();
                 try { Thread.sleep(2000); }
                 catch (InterruptedException e) { }
+                //removeMonsters();
             }
         }
     }
@@ -272,5 +306,15 @@ public class TouchMe extends Activity {
             DOT_DIAMETER + (rand.nextFloat() * (view.getHeight() - pad)),
             color,
             DOT_DIAMETER);
+    }
+    /*List removeMonsters(){
+        ArrayList<int, int> monsterSet = new ArrayList<int, int>;
+        //get locations of current monsters, and remove them from the grid.
+        return monsterSet;
+    }*/
+    void makeMonsters(/* List<int, int> monsterLocations*/){
+        //grab location of monsters from last move (given as parameter by the removeMonsters method)
+        //draw a rectangle for the monsters at places based on grid (use a [x][y] notation)
+        //randomly choose color between protected and vulnerable.
     }
 }
