@@ -69,6 +69,7 @@ public class DotView extends View {
         for (int i = 1; i <= 3; i++){
             canvas.drawLine(getWidth()/4*i, 0, getWidth()/4*i, getHeight(), paint);
         }
+        //then do monster activity stuff?
 
 
         /*if (null == dots) { return; }

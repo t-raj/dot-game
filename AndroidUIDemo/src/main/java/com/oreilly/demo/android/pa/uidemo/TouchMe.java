@@ -22,6 +22,7 @@ import android.widget.EditText;
 
 import com.oreilly.demo.android.pa.uidemo.model.Dot;
 import com.oreilly.demo.android.pa.uidemo.model.Dots;
+import com.oreilly.demo.android.pa.uidemo.model.MonsterActivity;
 import com.oreilly.demo.android.pa.uidemo.view.DotView;
 
 
@@ -31,6 +32,7 @@ import com.oreilly.demo.android.pa.uidemo.view.DotView;
 public class TouchMe extends Activity {
     /** Dot diameter */
     public static final int DOT_DIAMETER = 6;
+    public MonsterActivity monsterActivityActivity = new MonsterActivity();
 
     /** Listen for taps. */
     private static final class TrackingTouchListener
@@ -98,39 +100,6 @@ public class TouchMe extends Activity {
                 y,
                 Color.CYAN,
                 (int) ((p + 0.5) * (s + 0.5) * DOT_DIAMETER));
-        }
-    }
-
-    // create class for monster generation.
-    private final class MonsterGenerator implements Runnable {
-        final Dots dots;
-        //initialize monsters.
-        final DotView view;
-        final int color;
-
-        private final Handler hdlr = new Handler();
-        private final Runnable makeMonsters = new Runnable() {
-            @Override public void run() { makeDot(dots, view, color); }
-        };//change second part
-
-        private volatile boolean done;
-
-        MonsterGenerator(Dots dots, DotView view, int color) {
-            this.dots = dots;
-            this.view = view;
-            this.color = color;
-        }
-
-        public void done() { done = true; }
-
-        @Override
-        public void run() { //add creation of monsters here.
-            while (!done) {
-                hdlr.post(makeMonsters);
-                //use onTick event instead of sleep... sleep could work too.
-                try { Thread.sleep(1000); }
-                catch (InterruptedException e) { }
-            }
         }
     }
     /** Generate new dots, one per second. */
