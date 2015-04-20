@@ -66,7 +66,7 @@ public class TouchMe extends Activity {
                     for (Integer i: tracks) {
                         idx = evt.findPointerIndex(i.intValue());
                         for (int j = 0; j < n; j++) {
-                            addDot(
+                            addDot( //switch to a destroyMonster method
                                 mDots,
                                 evt.getHistoricalX(idx, j),
                                 evt.getHistoricalY(idx, j),
@@ -124,13 +124,11 @@ public class TouchMe extends Activity {
         public void done() { done = true; }
 
         @Override
-        public void run() { //add creation of monsters here.
+        public void run() {
             while (!done) {
                 hdlr.post(makeDots);
-                //makeMonsters();
                 try { Thread.sleep(2000); }
                 catch (InterruptedException e) { }
-                //removeMonsters();
             }
         }
     }
@@ -275,15 +273,5 @@ public class TouchMe extends Activity {
             DOT_DIAMETER + (rand.nextFloat() * (view.getHeight() - pad)),
             color,
             DOT_DIAMETER);
-    }
-    /*List removeMonsters(){
-        ArrayList<int, int> monsterSet = new ArrayList<int, int>;
-        //get locations of current monsters, and remove them from the grid.
-        return monsterSet;
-    }*/
-    void makeMonsters(/* List<int, int> monsterLocations*/){
-        //grab location of monsters from last move (given as parameter by the removeMonsters method)
-        //draw a rectangle for the monsters at places based on grid (use a [x][y] notation)
-        //randomly choose color between protected and vulnerable.
     }
 }

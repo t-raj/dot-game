@@ -1,5 +1,7 @@
 package com.oreilly.demo.android.pa.uidemo.model;
 
+import android.util.Log;
+
 import java.util.Random;
 
 /**
@@ -9,15 +11,19 @@ public class MonsterActivity {
 
     public MonsterActivity (){
         int x;
-        for (int i = 0; i < 4; i++){
-            for (int j = 0; j < 4; j++){
+        for (int i = 0; i < g; i++){
+            for (int j = 0; j < g; j++){
                 Random random = new Random();
                 x = random.nextInt(2);
+                Log.d(TAG, "x is: " +x);
                 monsterMatrix[i][j] = x;
             }
         }
     }
-    private int[][] monsterMatrix;
+
+    private int g = 4; //size of the grid.
+    private String TAG = "MonsterActivity log: ";
+    private int[][] monsterMatrix = new int[g][g];
 
     public void startActivity() throws InterruptedException {
         makeMonsters(monsterMatrix);
@@ -32,8 +38,8 @@ public class MonsterActivity {
         int x = 0;
         int y = 0;
         int z = 0;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; i < 4; i++) {
+        for (int i = 0; i < g; i++) {
+            for (int j = 0; i < g; i++) {
                 z = 0;
                 if (monsterMatrix[i][j] == 1) {
                     while (z != 1) {
