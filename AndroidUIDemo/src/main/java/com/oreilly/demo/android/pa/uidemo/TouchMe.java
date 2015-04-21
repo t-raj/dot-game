@@ -24,6 +24,7 @@ import com.oreilly.demo.android.pa.uidemo.model.Dot;
 import com.oreilly.demo.android.pa.uidemo.model.Dots;
 import com.oreilly.demo.android.pa.uidemo.model.MonsterActivity;
 import com.oreilly.demo.android.pa.uidemo.view.DotView;
+import com.oreilly.demo.android.pa.uidemo.view.MonsterView;
 
 
 /**
@@ -139,7 +140,8 @@ public class TouchMe extends Activity {
     final Dots dotModel = new Dots();
 
     /** The application view */
-    DotView dotView;
+    DotView dotView; //to be removed once the monsterView is correctly hooked up.
+    MonsterView monsterView;
 
     /** The dot generator */
     DotGenerator dotGenerator;

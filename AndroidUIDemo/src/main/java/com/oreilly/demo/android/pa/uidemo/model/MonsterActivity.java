@@ -1,7 +1,7 @@
 package com.oreilly.demo.android.pa.uidemo.model;
 
 import android.util.Log;
-
+import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
 import java.util.Random;
 
 /**
@@ -21,20 +21,27 @@ public class MonsterActivity {
         }
     }
 
-    private int g = 4; //size of the grid.
+    private int g = GRID_SIZE; //size of the grid.
     private String TAG = "MonsterActivity log: ";
     private int[][] monsterMatrix = new int[g][g];
 
-    public void startActivity() throws InterruptedException {
+
+    public int[][] getMonsterMatrix(){ return monsterMatrix; }
+
+    public void startActivity() {
         makeMonsters(monsterMatrix);
         int x = 0;
         while(x != 1){
-            Thread.sleep(1000); //make a constant, and change with levels?
+            try {
+                Thread.sleep(1000); //make a constant, and change with levels? //may extract this to touch me... or not.
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             monsterMatrix = removeMonsters(monsterMatrix);// which recursively calls makeMonsters with old positions.
             makeMonsters(monsterMatrix);
         }
     }
-    int[][] removeMonsters(int[][] monsterMatrix){
+    public int[][] removeMonsters(int[][] monsterMatrix){
         int x = 0;
         int y = 0;
         int z = 0;
@@ -63,7 +70,8 @@ public class MonsterActivity {
                 }
             }
         }
-        return monsterMatrix;
+        this.monsterMatrix = monsterMatrix;
+        return monsterMatrix; // send this to monsterView?
     }
     //get locations of current monsters, and remove them from the grid.
 

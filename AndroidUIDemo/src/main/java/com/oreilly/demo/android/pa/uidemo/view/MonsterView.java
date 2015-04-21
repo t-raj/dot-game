@@ -1,33 +1,25 @@
 package com.oreilly.demo.android.pa.uidemo.view;
 
 import android.content.Context;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.oreilly.demo.android.pa.uidemo.model.Dot;
-import com.oreilly.demo.android.pa.uidemo.model.Dots;
+import com.oreilly.demo.android.pa.uidemo.model.Monster;
+import com.oreilly.demo.android.pa.uidemo.model.MonsterActivity;
 import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
 
-
 /**
- * I see spots!
- *
- * @author <a href="mailto:android@callmeike.net">Blake Meike</a>
+ * Created by Austin Kelsch on 4/21/2015.
  */
-public class DotView extends View {
+public class MonsterView extends View {
 
-    private volatile Dots dots;
+    private MonsterActivity monsterActivity;// = new MonsterActivity();//access its monsterMatrices for drawing on view.
+        //above is set by TouchMe
     private int g = GRID_SIZE;
-
-    /**
-     * @param context the rest of the application
-     */
-    public DotView(Context context) {
+    public MonsterView(Context context) {
         super(context);
         setFocusableInTouchMode(true);
     }
@@ -36,7 +28,7 @@ public class DotView extends View {
      * @param context
      * @param attrs
      */
-    public DotView(Context context, AttributeSet attrs) {
+    public MonsterView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setFocusableInTouchMode(true);
     }
@@ -46,22 +38,19 @@ public class DotView extends View {
      * @param attrs
      * @param defStyle
      */
-    public DotView(Context context, AttributeSet attrs, int defStyle) {
+    public MonsterView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setFocusableInTouchMode(true);
     }
 
-    /**
-     * @param dots
-     */
-    public void setDots(Dots dots) { this.dots = dots; }
+    public void setMonsterActivity (MonsterActivity newMonsterActivity){ //also set the same activity in touchme and send it to this view.
+        monsterActivity = newMonsterActivity;
+        monsterActivity.startActivity();
+    }
 
-    /**
-     * @see android.view.View#onDraw(android.graphics.Canvas)
-     */
     @Override protected void onDraw(Canvas canvas) {//use a bool to check if grid isDrawn. establish set of monsters and have them drawn each time.
         Paint paint = new Paint();
-        paint.setStyle(Style.STROKE);
+        paint.setStyle(Paint.Style.STROKE);
         paint.setColor(hasFocus() ? Color.BLUE : Color.GRAY);
         canvas.drawRect(0, 0, getWidth() - 1, getHeight() -1, paint);
         //extract this loop to a separate method.
@@ -71,7 +60,16 @@ public class DotView extends View {
         for (int i = 1; i <= g-1; i++){
             canvas.drawLine(getWidth()/g*i, 0, getWidth()/g*i, getHeight(), paint);
         }
+
         //then do monster activity stuff?
+        //drawing monsters...
+        /*
+        int[][] monsters = monsterActivity.getMonsterMatrix();
+        for (int i =0; i <= g; i++){
+            for (int j = 0; i <= g; i++){
+                canvas.
+            }
+        }*/
 
 
         /*if (null == dots) { return; }
