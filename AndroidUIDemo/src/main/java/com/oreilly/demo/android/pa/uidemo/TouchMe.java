@@ -22,7 +22,9 @@ import android.widget.EditText;
 
 import com.oreilly.demo.android.pa.uidemo.model.Dot;
 import com.oreilly.demo.android.pa.uidemo.model.Dots;
+import com.oreilly.demo.android.pa.uidemo.model.MonsterActivity;
 import com.oreilly.demo.android.pa.uidemo.view.DotView;
+import com.oreilly.demo.android.pa.uidemo.view.MonsterView;
 
 
 /**
@@ -31,6 +33,7 @@ import com.oreilly.demo.android.pa.uidemo.view.DotView;
 public class TouchMe extends Activity {
     /** Dot diameter */
     public static final int DOT_DIAMETER = 6;
+    public MonsterActivity monsterActivityActivity = new MonsterActivity();
 
     /** Listen for taps. */
     private static final class TrackingTouchListener
@@ -64,7 +67,7 @@ public class TouchMe extends Activity {
                     for (Integer i: tracks) {
                         idx = evt.findPointerIndex(i.intValue());
                         for (int j = 0; j < n; j++) {
-                            addDot(
+                            addDot( //switch to a destroyMonster method
                                 mDots,
                                 evt.getHistoricalX(idx, j),
                                 evt.getHistoricalY(idx, j),
@@ -100,7 +103,6 @@ public class TouchMe extends Activity {
                 (int) ((p + 0.5) * (s + 0.5) * DOT_DIAMETER));
         }
     }
-
     /** Generate new dots, one per second. */
     private final class DotGenerator implements Runnable {
         final Dots dots;
@@ -138,7 +140,8 @@ public class TouchMe extends Activity {
     final Dots dotModel = new Dots();
 
     /** The application view */
-    DotView dotView;
+    DotView dotView; //to be removed once the monsterView is correctly hooked up.
+    MonsterView monsterView;
 
     /** The dot generator */
     DotGenerator dotGenerator;
