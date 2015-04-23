@@ -82,7 +82,7 @@ public class TouchMe extends Activity {
                     return false;
             }
 
-            for (Integer i: tracks) {
+            for (Integer i: tracks) {   //if the indices coincide with a space where a vulnerable monster is, remove it from the grid.
                 idx = evt.findPointerIndex(i.intValue());
                 addDot(
                     mDots,

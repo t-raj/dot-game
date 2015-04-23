@@ -62,7 +62,7 @@ public class DotView extends View {
     @Override protected void onDraw(Canvas canvas) {//use a bool to check if grid isDrawn. establish set of monsters and have them drawn each time.
         Paint paint = new Paint();
         paint.setStyle(Style.STROKE);
-        paint.setColor(hasFocus() ? Color.BLUE : Color.GRAY);
+        paint.setColor(Color.BLACK);
         canvas.drawRect(0, 0, getWidth() - 1, getHeight() -1, paint);
         //extract this loop to a separate method.
         for (int i = 1; i <= g-1; i++){
