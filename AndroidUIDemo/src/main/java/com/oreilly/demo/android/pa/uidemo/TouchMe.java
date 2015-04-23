@@ -23,6 +23,9 @@ import android.widget.EditText;
 import com.oreilly.demo.android.pa.uidemo.model.Dot;
 import com.oreilly.demo.android.pa.uidemo.model.Dots;
 import com.oreilly.demo.android.pa.uidemo.model.MonsterActivity;
+import com.oreilly.demo.android.pa.uidemo.model.clock.ClockModel;
+import com.oreilly.demo.android.pa.uidemo.model.clock.DefaultClockModel;
+import com.oreilly.demo.android.pa.uidemo.model.clock.OnTickListener;
 import com.oreilly.demo.android.pa.uidemo.view.DotView;
 import com.oreilly.demo.android.pa.uidemo.view.MonsterView;
 
@@ -30,10 +33,11 @@ import com.oreilly.demo.android.pa.uidemo.view.MonsterView;
 /**
  * Android UI demo program
  */
-public class TouchMe extends Activity {
+public class TouchMe extends Activity implements OnTickListener {
     /** Dot diameter */
     public static final int DOT_DIAMETER = 6;
     public MonsterActivity monsterActivityActivity = new MonsterActivity();
+
 
     /** Listen for taps. */
     private static final class TrackingTouchListener
@@ -146,9 +150,18 @@ public class TouchMe extends Activity {
     /** The dot generator */
     DotGenerator dotGenerator;
 
+    public void onTick(){
+        monsterActivityActivity.removeMonsters();
+        
+    }
+
     /** Called when the activity is first created. */
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
+
+        ClockModel clock  = new DefaultClockModel();
+        clock.setOnTickListener(this);
+        clock.start();
 
         // install the view
         setContentView(R.layout.main);
