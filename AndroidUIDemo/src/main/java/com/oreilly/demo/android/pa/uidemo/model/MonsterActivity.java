@@ -54,12 +54,12 @@ public class MonsterActivity {
                         //the monster will be sent to i+x, i+y
                         //check if that spot is 1 already, if so, randomly select again.
                         Random random = new Random();
-                        x = random.nextInt(2);
-                        if (x == 0) {
+                        x = random.nextInt(3);
+                        if (x == 2) {
                             x = -1;
                         }
-                        y = random.nextInt(2);
-                        if (y == 0) {
+                        y = random.nextInt(3);
+                        if (y == 2) {
                             y = -1;
                         }
                         if (monsterMatrix[i + x][i + y] != 1) {
