@@ -37,11 +37,11 @@ public class MonsterActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            monsterMatrix = removeMonsters(monsterMatrix);// which recursively calls makeMonsters with old positions.
+            monsterMatrix = removeMonsters();// which recursively calls makeMonsters with old positions.
             makeMonsters(monsterMatrix);
         }
     }
-    public int[][] removeMonsters(int[][] monsterMatrix){ // 0's represent empty space, 1's represent invulnerable monsters, 2's represent vulnerable monsters.
+    public int[][] removeMonsters(){ // 0's represent empty space, 1's represent invulnerable monsters, 2's represent vulnerable monsters.
         int x = 0;
         int y = 0;
         int z = 0;
@@ -54,8 +54,13 @@ public class MonsterActivity {
                         currentMonster = monsterMatrix[i][j];
                         //randomly select two numbers between (x any y, (from -1,1)
                         //the monster will be sent to i+x, i+y
-                        //check if that spot is 1 already, if so, randomly select again.
+                        //check if that spot is 1 already, if so, randomly select again
                         Random random = new Random();
+                        currentMonster = random.nextInt(3);
+                        if(currentMonster == 0)
+                        {
+                            currentMonster = 1;
+                        }
                         x = random.nextInt(3);
                         if (x == 2) {
                             x = -1;
@@ -64,7 +69,7 @@ public class MonsterActivity {
                         if (y == 2) {
                             y = -1;
                         }
-                        if (monsterMatrix[i + x][i + y] != 1 && monsterMatrix[i + x][i + y] != 2) { //modify this so it only tries 3 times, in case all neighbors are full.
+                        if (monsterMatrix[i + x][i + y] != 1 || monsterMatrix[i + x][i + y] != 2) { //modify this so it only tries 3 times, in case all neighbors are full.
                             monsterMatrix[i + x][i + y] = currentMonster; //space is open, and monster moves to it
                             z = 1;//process would repeat until an open space is found
                         }
