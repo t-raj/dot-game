@@ -30,7 +30,7 @@ import com.oreilly.demo.android.pa.uidemo.model.clock.OnTickListener;
 import com.oreilly.demo.android.pa.uidemo.view.DotView;
 import com.oreilly.demo.android.pa.uidemo.view.MonsterView;
 import static com.oreilly.demo.android.pa.uidemo.Constants.Constants.*;
-
+import android.graphics.Canvas;
 
 /**
  * Android UI demo program
@@ -110,7 +110,7 @@ public class TouchMe extends Activity implements OnTickListener {
         }
     }
     /** Generate new dots, one per second. */
-    private final class DotGenerator implements Runnable {
+  /*  private final class DotGenerator implements Runnable {
         final Dots dots;
         final DotView view;
         final int color;
@@ -139,7 +139,7 @@ public class TouchMe extends Activity implements OnTickListener {
             }
         }
     }
-
+*/
     private final Random rand = new Random();
 
     /** The application model */
@@ -147,10 +147,11 @@ public class TouchMe extends Activity implements OnTickListener {
 
     /** The application view */
     DotView dotView; //to be removed once the monsterView is correctly hooked up.
+
     MonsterView monsterView;
 
     /** The dot generator */
-    DotGenerator dotGenerator;
+  // DotGenerator dotGenerator;
 
     public void onTick(){
 
@@ -158,20 +159,29 @@ public class TouchMe extends Activity implements OnTickListener {
 
     /** Called when the activity is first created. */
     @Override public void onCreate(Bundle state) {
-       String TAG = "MonsterActivity log: ";
+        String TAG = "MonsterActivity log: ";
+
+
         super.onCreate(state);
         int g = GRID_SIZE, k = 0;
         int[][] matrix = monsterActivityActivity.getMonsterMatrix();
-        for(int i = 0; i < g; i++)
-            for(int j = 0; j < g; j++)
-            {
-               if(matrix[i][j]== 1)
-               {
-                   Log.d(TAG, "There is a monster at this location"+ i+ "    "+ j);
-                   // Add the actual monsters to the screen in this loop
+        for (int i = 0; i < g; i++)
+            for (int j = 0; j < g; j++) {
+                if (matrix[i][j] == 1) {
+                    Log.d(TAG, "There is a monster at this location" + i + "    " + j);
 
-               }
+                    dotModel.addDot(i, j, R.color.green, 200);
+
+
+
+
+                    // Add the actual monsters to the screen in this loop
+
+                }
+
+
             }
+
 
 
         ClockModel clock  = new DefaultClockModel();
@@ -184,6 +194,7 @@ public class TouchMe extends Activity implements OnTickListener {
         // find the dots view
         dotView = (DotView) findViewById(R.id.dots);
         dotView.setDots(dotModel);
+
 
         dotView.setOnCreateContextMenuListener(this);
         dotView.setOnTouchListener(new TrackingTouchListener(dotModel));
@@ -213,7 +224,7 @@ public class TouchMe extends Activity implements OnTickListener {
             } });
 
 
-        dotView.setOnFocusChangeListener(new OnFocusChangeListener() {
+      /*  dotView.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus && (null != dotGenerator)) {
                     dotGenerator.done();
@@ -225,7 +236,7 @@ public class TouchMe extends Activity implements OnTickListener {
                     new Thread(dotGenerator).start();
                 }
             } });
-
+*/
         // wire up the controller
         ((Button) findViewById(R.id.button1)).setOnClickListener(
             new Button.OnClickListener() {

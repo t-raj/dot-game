@@ -9,8 +9,10 @@ import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.oreilly.demo.android.pa.uidemo.R;
 import com.oreilly.demo.android.pa.uidemo.model.Dots;
 import static com.oreilly.demo.android.pa.uidemo.Constants.Constants.*;
+import com.oreilly.demo.android.pa.uidemo.model.Dot;
 
 
 /**
@@ -58,6 +60,13 @@ public class DotView extends View {
     /**
      * @see android.view.View#onDraw(android.graphics.Canvas)
      */
+
+
+
+
+
+
+
     @Override protected void onDraw(Canvas canvas) {//use a bool to check if grid isDrawn. establish set of monsters and have them drawn each time.
         Paint paint = new Paint();
         paint.setStyle(Style.STROKE);
@@ -70,19 +79,16 @@ public class DotView extends View {
         for (int i = 1; i <= g-1; i++){
             canvas.drawLine(getWidth()/g*i, 0, getWidth()/g*i, getHeight(), paint);
         }
-        //then do monster activity stuff?
 
 
-        /*if (null == dots) { return; }
 
-        paint.setStyle(Style.FILL);
-        for (Dot dot : dots.getDots()) {
-            paint.setColor(dot.getColor());
-            canvas.drawCircle(
-                dot.getX(),
-                dot.getY(),
-                dot.getDiameter(),
-                paint);
-        }*/
+         paint.setStyle(Style.FILL);
+          for(Dot dot: dots.getDots())
+            {
+                paint.setColor(Color.GREEN);
+                canvas.drawCircle(dot.getX(),dot.getY(),dot.getDiameter(),paint);
+            }
+
+
     }
 }
