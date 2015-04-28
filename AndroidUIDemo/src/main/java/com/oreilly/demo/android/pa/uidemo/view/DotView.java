@@ -9,9 +9,8 @@ import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.oreilly.demo.android.pa.uidemo.model.Dot;
 import com.oreilly.demo.android.pa.uidemo.model.Dots;
-import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
+import static com.oreilly.demo.android.pa.uidemo.Constants.Constants.*;
 
 
 /**

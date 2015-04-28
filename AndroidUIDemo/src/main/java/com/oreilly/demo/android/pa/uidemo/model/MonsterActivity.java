@@ -1,13 +1,19 @@
 package com.oreilly.demo.android.pa.uidemo.model;
 
 import android.util.Log;
-import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
+
+import com.oreilly.demo.android.pa.uidemo.TouchMe;
+
+import static com.oreilly.demo.android.pa.uidemo.Constants.Constants.*;
 import java.util.Random;
 
 /**
  * Created by akelsch on 4/19/2015.
  */
 public class MonsterActivity {
+    private int g = GRID_SIZE; //size of the grid.
+    private String TAG = "MonsterActivity log: ";
+    private int[][] monsterMatrix = new int[g][g];
 
     public MonsterActivity (){
         int x;
@@ -21,9 +27,7 @@ public class MonsterActivity {
         }
     }
 
-    private int g = GRID_SIZE; //size of the grid.
-    private String TAG = "MonsterActivity log: ";
-    private int[][] monsterMatrix = new int[g][g];
+
 
 
     public int[][] getMonsterMatrix(){ return monsterMatrix; }
@@ -47,7 +51,7 @@ public class MonsterActivity {
         int z = 0;
         int currentMonster = 0;
         for (int i = 0; i < g; i++) {
-            for (int j = 0; i < g; i++) {
+            for (int j = 0; j < g; i++) {
                 z = 0;
                 if (monsterMatrix[i][j] == 1 || monsterMatrix[i][j] ==  2) {
                     while (z != 1) {

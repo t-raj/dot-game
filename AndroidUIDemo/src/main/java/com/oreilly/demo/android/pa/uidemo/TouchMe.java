@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -28,6 +29,7 @@ import com.oreilly.demo.android.pa.uidemo.model.clock.DefaultClockModel;
 import com.oreilly.demo.android.pa.uidemo.model.clock.OnTickListener;
 import com.oreilly.demo.android.pa.uidemo.view.DotView;
 import com.oreilly.demo.android.pa.uidemo.view.MonsterView;
+import static com.oreilly.demo.android.pa.uidemo.Constants.Constants.*;
 
 
 /**
@@ -40,9 +42,9 @@ public class TouchMe extends Activity implements OnTickListener {
 
 
     /** Listen for taps. */
-    private static final class TrackingTouchListener
-        implements View.OnTouchListener
+    private static final class TrackingTouchListener implements View.OnTouchListener
     {
+
         private final Dots mDots;
         private List<Integer> tracks = new ArrayList<Integer>();
 
@@ -151,13 +153,26 @@ public class TouchMe extends Activity implements OnTickListener {
     DotGenerator dotGenerator;
 
     public void onTick(){
-        monsterActivityActivity.removeMonsters();
-        
+
     }
 
     /** Called when the activity is first created. */
     @Override public void onCreate(Bundle state) {
+       String TAG = "MonsterActivity log: ";
         super.onCreate(state);
+        int g = GRID_SIZE, k = 0;
+        int[][] matrix = monsterActivityActivity.getMonsterMatrix();
+        for(int i = 0; i < g; i++)
+            for(int j = 0; j < g; j++)
+            {
+               if(matrix[i][j]== 1)
+               {
+                   Log.d(TAG, "There is a monster at this location"+ i+ "    "+ j);
+                   // Add the actual monsters to the screen in this loop
+
+               }
+            }
+
 
         ClockModel clock  = new DefaultClockModel();
         clock.setOnTickListener(this);
