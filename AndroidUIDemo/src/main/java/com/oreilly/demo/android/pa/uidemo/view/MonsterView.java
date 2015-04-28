@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.oreilly.demo.android.pa.uidemo.model.MonsterActivity;
-import static com.oreilly.demo.android.pa.uidemo.Constants.Constants.*;
+import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
 
 /**
  * Created by Austin Kelsch on 4/21/2015.

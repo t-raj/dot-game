@@ -29,7 +29,7 @@ import com.oreilly.demo.android.pa.uidemo.model.clock.DefaultClockModel;
 import com.oreilly.demo.android.pa.uidemo.model.clock.OnTickListener;
 import com.oreilly.demo.android.pa.uidemo.view.DotView;
 import com.oreilly.demo.android.pa.uidemo.view.MonsterView;
-import static com.oreilly.demo.android.pa.uidemo.Constants.Constants.*;
+import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
 import android.graphics.Canvas;
 
 /**
@@ -170,7 +170,7 @@ public class TouchMe extends Activity implements OnTickListener {
                 if (matrix[i][j] == 1) {
                     Log.d(TAG, "There is a monster at this location" + i + "    " + j);
 
-                    dotModel.addDot(i, j, R.color.green, 200);
+                    dotModel.addDot(i, j, R.color.green, 30);
 
 
 

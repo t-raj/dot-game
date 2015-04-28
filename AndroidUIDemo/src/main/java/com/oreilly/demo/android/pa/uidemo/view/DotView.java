@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.oreilly.demo.android.pa.uidemo.R;
 import com.oreilly.demo.android.pa.uidemo.model.Dots;
-import static com.oreilly.demo.android.pa.uidemo.Constants.Constants.*;
+import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
 import com.oreilly.demo.android.pa.uidemo.model.Dot;
 
 
@@ -80,13 +80,14 @@ public class DotView extends View {
             canvas.drawLine(getWidth()/g*i, 0, getWidth()/g*i, getHeight(), paint);
         }
 
-
+        int halfSquareW = getWidth()/g/2;
+        int halfSquareH = getHeight()/g/2;
 
          paint.setStyle(Style.FILL);
           for(Dot dot: dots.getDots())
             {
                 paint.setColor(Color.GREEN);
-                canvas.drawCircle(dot.getX(),dot.getY(),dot.getDiameter(),paint);
+                canvas.drawCircle((getWidth()/g)*(dot.getX())+halfSquareW,getHeight()/g*dot.getY()+halfSquareH,dot.getDiameter(),paint);
             }
 
 

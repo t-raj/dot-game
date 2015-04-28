@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.oreilly.demo.android.pa.uidemo.TouchMe;
 
-import static com.oreilly.demo.android.pa.uidemo.Constants.Constants.*;
+import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
 import java.util.Random;
 
 /**
@@ -17,9 +17,9 @@ public class MonsterActivity {
 
     public MonsterActivity (){
         int x;
+        Random random = new Random();
         for (int i = 0; i < g; i++){
             for (int j = 0; j < g; j++){
-                Random random = new Random();
                 x = random.nextInt(2);
                 Log.d(TAG, "x is: " +x);
                 monsterMatrix[i][j] = x;
@@ -73,8 +73,8 @@ public class MonsterActivity {
                         if (y == 2) {
                             y = -1;
                         }
-                        if (monsterMatrix[i + x][i + y] != 1 || monsterMatrix[i + x][i + y] != 2) { //modify this so it only tries 3 times, in case all neighbors are full.
-                            monsterMatrix[i + x][i + y] = currentMonster; //space is open, and monster moves to it
+                        if (monsterMatrix[(i + x) % g][(i + y) % g] != 1 || monsterMatrix[(i + x) % g][(i + y) % g] != 2) { //modify this so it only tries 3 times, in case all neighbors are full.
+                            monsterMatrix[(i + x) % g][(i + y) % g] = currentMonster; //space is open, and monster moves to it
                             z = 1;//process would repeat until an open space is found
                         }
                     }
