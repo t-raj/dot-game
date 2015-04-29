@@ -20,8 +20,12 @@ public class MonsterActivity {
         Random random = new Random();
         for (int i = 0; i < g; i++){
             for (int j = 0; j < g; j++){
-                x = random.nextInt(2);
-                Log.d(TAG, "x is: " +x);
+                x = random.nextInt(3);
+                if (x==2) // to favor the odds for the board to be approximately 1/3 filled on start.
+                {
+                    x = 0;
+                }
+                //Log.d(TAG, "x is: " +x);
                 monsterMatrix[i][j] = x;
             }
         }
@@ -62,8 +66,8 @@ public class MonsterActivity {
                         //the monster will be sent to i+x, i+y
                         //check if that spot is 1 or 2 already, if so, randomly select again
                         Random random = new Random();
-                        currentMonster = random.nextInt(3); // pick a number, 0-2 (if it is 0 or 1, monster is invulnerable. if it is 2, the monster is vulnerable).
-                        if(currentMonster == 0) //if number picked is 0, set it 1
+                        currentMonster = random.nextInt(6); // pick a number, 0-4 (if it is 0 or 1, monster is invulnerable. if it is 2, the monster is vulnerable).
+                        if(currentMonster == 0 || currentMonster > 2) //if number picked is 0, set it 1
                         {
                             currentMonster = 1;
                         }
@@ -99,7 +103,6 @@ public class MonsterActivity {
                 }
             }
         }
-        this.monsterMatrix = monsterMatrix;
         return monsterMatrix; // send this to monsterView?
     }
     //get locations of current monsters, and remove them from the grid.
