@@ -154,7 +154,45 @@ public class TouchMe extends Activity implements OnTickListener {
   // DotGenerator dotGenerator;
 
     public void onTick(){
+        monsterMove();
+    }
 
+    public void monsterMove(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                View v = findViewById(R.id.dots);
+                v.invalidate();
+            }
+        });
+
+
+        String TAG = "MonsterActivity log: ";
+        int g = GRID_SIZE;
+        monsterActivityActivity.removeMonsters();
+        int[][] matrix = monsterActivityActivity.getMonsterMatrix();
+        for (int i = 0; i < g; i++)
+            for (int j = 0; j < g; j++) {
+                if (matrix[i][j] == 1) {
+                    Log.d(TAG, "There is a monster at this location" + i + "    " + j);
+
+                    dotModel.addDot(i, j, R.color.green, 30);
+                    if(matrix[i][j] == 2){
+                        Log.d(TAG, "There is a monster at this location" + i + "    " + j);
+                        dotModel.addDot(i, j, R.color.yellow, 30);
+                    }
+
+
+
+
+                    // Add the actual monsters to the screen in this loop
+
+                }
+
+
+            }
+
+        dotView.setDots(dotModel);
     }
 
     /** Called when the activity is first created. */

@@ -53,8 +53,9 @@ public class MonsterActivity {
         for (int i = 0; i < g; i++) {
             for (int j = 0; j < g; i++) {
                 z = 0;
+                Log.d(TAG, "Current monster being edited: ["+i+"]["+j+"]" );
                 if (monsterMatrix[i][j] == 1 || monsterMatrix[i][j] ==  2) {
-                    while (z != 1) {
+                    while (z != 3) {
                         currentMonster = monsterMatrix[i][j];
                         //randomly select two numbers between (x any y, (from -1,1)
                         //the monster will be sent to i+x, i+y
@@ -75,7 +76,10 @@ public class MonsterActivity {
                         }
                         if (monsterMatrix[(i + x) % g][(i + y) % g] != 1 || monsterMatrix[(i + x) % g][(i + y) % g] != 2) { //modify this so it only tries 3 times, in case all neighbors are full.
                             monsterMatrix[(i + x) % g][(i + y) % g] = currentMonster; //space is open, and monster moves to it
-                            z = 1;//process would repeat until an open space is found
+                            z = 3;//process would repeat until an open space is found. only tries 3 times, otherwise it'll stay put.
+                        }
+                        else{
+                            z++;
                         }
                     }
                 }
