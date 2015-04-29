@@ -8,6 +8,7 @@ import java.util.List;
 /** A list of dots. */
 public class Dots {
     /** DotChangeListener. */
+    float MonsterX, MonsterY;
     public interface DotsChangeListener {
         /** @param dots the dots that changed. */
         void onDotsChange(Dots dots);
@@ -47,6 +48,22 @@ public class Dots {
         dots.clear();
         notifyListener();
     }
+    public void setCoords(float x, float y)
+    {
+        MonsterY = y;
+        MonsterX = x;
+
+
+
+    }
+   public float getX()
+   {
+       return MonsterX;
+   }
+public float getY()
+{
+    return MonsterY;
+}
 
     private void notifyListener() {
         if (null != dotsChangeListener) {

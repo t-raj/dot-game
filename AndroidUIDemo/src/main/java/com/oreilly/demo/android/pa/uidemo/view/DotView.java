@@ -61,7 +61,18 @@ public class DotView extends View {
      * @see android.view.View#onDraw(android.graphics.Canvas)
      */
 
-
+public int getIndexX(float x)
+{
+    int monsterIndexX;
+    monsterIndexX = (int) x/getWidth()*g;
+    return monsterIndexX;
+}
+public int getIndexY(float y)
+{
+    int monsterIndexY;
+    monsterIndexY = (int) y/getWidth()*g;
+    return monsterIndexY;
+}
 
 
 
