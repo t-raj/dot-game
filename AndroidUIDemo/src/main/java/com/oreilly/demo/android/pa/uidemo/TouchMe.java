@@ -164,7 +164,7 @@ public class TouchMe extends Activity implements OnTickListener {
 
         String TAG = "MonsterActivity log: ";
         int g = GRID_SIZE;
-        monsterActivityActivity.removeMonsters();
+        monsterActivityActivity.monsterGridMove();
         int[][] matrix = monsterActivityActivity.getMonsterMatrix();
         dotModel.clearDots();
         for (int i = 0; i < g; i++) {
@@ -204,14 +204,7 @@ public class TouchMe extends Activity implements OnTickListener {
             for (int j = 0; j < g; j++) {
                 if (matrix[i][j] == 1) {
                     Log.d(TAG, "There is a monster at this location" + i + "    " + j);
-
                     dotModel.addDot(i, j, R.color.green, 30);
-
-
-
-
-                    // Add the actual monsters to the screen in this loop
-
                 }
 
 

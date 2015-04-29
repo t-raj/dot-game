@@ -2,8 +2,6 @@ package com.oreilly.demo.android.pa.uidemo.model;
 
 import android.util.Log;
 
-import com.oreilly.demo.android.pa.uidemo.TouchMe;
-
 import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
 import java.util.Random;
 
@@ -31,25 +29,9 @@ public class MonsterActivity {
         }
     }
 
-
-
-
     public int[][] getMonsterMatrix(){ return monsterMatrix; }
 
-    public void startActivity() {
-        makeMonsters(monsterMatrix);
-        int x = 0;
-        while(x != 1){
-            try {
-                Thread.sleep(1000); //make a constant, and change with levels? //may extract this to touch me... or not.
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            monsterMatrix = removeMonsters();// which recursively calls makeMonsters with old positions.
-            makeMonsters(monsterMatrix);
-        }
-    }
-    public int[][] removeMonsters(){ // 0's represent empty space, 1's represent invulnerable monsters, 2's represent vulnerable monsters.
+    public int[][] monsterGridMove(){ // 0's represent empty space, 1's represent invulnerable monsters, 2's represent vulnerable monsters.
         int x = 0;
         int y = 0;
         int z = 0;
@@ -103,13 +85,10 @@ public class MonsterActivity {
                 }
             }
         }
-        return monsterMatrix; // send this to monsterView?
+        return monsterMatrix;
     }
-    //get locations of current monsters, and remove them from the grid.
 
-    void makeMonsters(int[][] monsterMatrix){ //consider making a separate 'monster' class that has simplified methods for creating and removing monsters.
-        //grab location of monsters from last move (given as parameter by the removeMonsters method)
-        //draw a rectangle for the monsters at places based on grid (use a [x][y] notation)
-        //randomly choose color between protected and vulnerable.
+    void removeMonster(int x, int y){ //call this when a monster is touched.
+        monsterMatrix[x][y] = 0;
     }
 }
