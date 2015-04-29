@@ -64,8 +64,8 @@ public class MonsterActivity {
                         //the monster will be sent to i+x, i+y
                         //check if that spot is 1 already, if so, randomly select again
                         Random random = new Random();
-                        currentMonster = random.nextInt(3);
-                        if(currentMonster == 0)
+                        currentMonster = random.nextInt(3); // pick a number, 0-2 (if it is 0 or 1, monster is invulnerable. if it is 2, the monster is vulnerable).
+                        if(currentMonster == 0) //if number picked is 0, set it 1
                         {
                             currentMonster = 1;
                         }
