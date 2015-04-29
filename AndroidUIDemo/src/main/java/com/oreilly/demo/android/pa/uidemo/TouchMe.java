@@ -7,7 +7,6 @@ import java.util.Random;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.method.Touch;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
@@ -37,16 +36,16 @@ public class TouchMe extends Activity implements OnTickListener {
     /** Dot diameter */
     public static final int DOT_DIAMETER = 6;
     public MonsterActivity monsterActivityActivity = new MonsterActivity();
-    int g = GRID_SIZE;
+    public static int level; //current level
+    public static int time; //time left in current level
 
 
     /** Listen for taps. */
-    private final class TrackingTouchListener implements View.OnTouchListener
+    private static final class TrackingTouchListener implements View.OnTouchListener
     {
 
         private final Dots mDots;
         private List<Integer> tracks = new ArrayList<Integer>();
-
 
         TrackingTouchListener(Dots dots) { mDots = dots; }
 
@@ -62,7 +61,6 @@ public class TouchMe extends Activity implements OnTickListener {
                     idx = (action & MotionEvent.ACTION_POINTER_INDEX_MASK)
                         >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
                     tracks.add(Integer.valueOf(evt.getPointerId(idx)));
-
                     break;
 
                 case MotionEvent.ACTION_POINTER_UP:
@@ -81,16 +79,59 @@ public class TouchMe extends Activity implements OnTickListener {
 
             for (Integer i: tracks) {   //if the indices coincide with a space where a vulnerable monster is, remove it from the grid.
                 idx = evt.findPointerIndex(i.intValue());
-                mDots.setCoords(evt.getX(idx), evt.getY(idx));
-                TouchMe.this.removeMonster();
+
+                addDot(
+                    mDots,
+                    evt.getX(idx),
+                    evt.getY(idx),
+                    evt.getPressure(idx),
+
+                    evt.getSize(idx));
 
             }
 
             return true;
         }
 
-
+        private void addDot(Dots dots, float x, float y, float p, float s) {
+            dots.addDot(
+                x,
+                y,
+                Color.CYAN,
+                (int) ((p + 0.5) * (s + 0.5) * DOT_DIAMETER));
+        }
     }
+    /** Generate new dots, one per second. */
+  /*  private final class DotGenerator implements Runnable {
+        final Dots dots;
+        final DotView view;
+        final int color;
+
+        private final Handler hdlr = new Handler();
+        private final Runnable makeDots = new Runnable() {
+            @Override public void run() { makeDot(dots, view, color); }
+        };
+
+        private volatile boolean done;
+
+        DotGenerator(Dots dots, DotView view, int color) {
+            this.dots = dots;
+            this.view = view;
+            this.color = color;
+        }
+
+        public void done() { done = true; }
+
+        @Override
+        public void run() {
+            while (!done) {
+                hdlr.post(makeDots);
+                try { Thread.sleep(2000); }
+                catch (InterruptedException e) { }
+            }
+        }
+    }
+*/
     private final Random rand = new Random();
 
     /** The application model */
@@ -99,54 +140,17 @@ public class TouchMe extends Activity implements OnTickListener {
     /** The application view */
     DotView dotView; //refactor to be called, monster view.
 
-    public void removeMonster()
+    /** The dot generator */
+  // DotGenerator dotGenerator;
+    public void removeMonster(int x, int y)
     {
-        String TAG = "Remove Monsters: ";
-        //Log.d(TAG, "checking if a monster should be removed.");
-        Float tempX = dotModel.getX();
-        Float tempY = dotModel.getY();
-        int ux = dotView.getIndexX(tempX);
-        int uy = dotView.getIndexY(tempY);
-        //Log.d(TAG, "the adjusted index values: ["+ux+"]["+uy+"]");
        int[][] temp = monsterActivityActivity.getMonsterMatrix();
-       if(temp[ux][uy]== 2)
+       if(temp[x][y]== 2)
        {
-           temp[ux][uy]=0;
+           temp[x][y]=0;
            monsterActivityActivity.setMonsterMatrix(temp);
-           runOnUiThread(new Runnable() {
-               @Override
-               public void run() {
-                   View v = findViewById(R.id.dots);
-                   v.invalidate();
-               }
-           });
-           dotModel.clearDots();
-           for (int i = 0; i < g; i++) {
-               for (int j = 0; j < g; j++) {
-                   if (temp[i][j] == 1) { //invulnerable monster.
-                       //Log.d(TAG, "There is a monster at this location" + i + "    " + j);
-                       dotModel.addDot(i, j, R.color.green, 30);
-                   }
 
-                   if(temp[i][j] == 2){ //vulnerable monster
-                       //Log.d(TAG, "There is a monster at this location" + i + "    " + j);
-                       dotModel.addDot(i, j, R.color.yellow, 30);
-                   }
-
-
-
-
-                   // Add the actual monsters to the screen in this loop
-
-               }
-
-
-           }
-
-           dotView.setDots(dotModel);
        }
-
-
     }
 
     public void onTick(){
@@ -169,12 +173,12 @@ public class TouchMe extends Activity implements OnTickListener {
         for (int i = 0; i < g; i++) {
             for (int j = 0; j < g; j++) {
                 if (matrix[i][j] == 1) { //invulnerable monster.
-                    //Log.d(TAG, "There is a monster at this location" + i + "    " + j);
+                    Log.d(TAG, "There is a monster at this location" + i + "    " + j);
                     dotModel.addDot(i, j, R.color.green, 30);
                 }
 
                 if(matrix[i][j] == 2){ //vulnerable monster
-                        //Log.d(TAG, "There is a monster at this location" + i + "    " + j);
+                        Log.d(TAG, "There is a monster at this location" + i + "    " + j);
                         dotModel.addDot(i, j, R.color.yellow, 30);
                 }
 
@@ -200,7 +204,7 @@ public class TouchMe extends Activity implements OnTickListener {
         for (int i = 0; i < g; i++)
             for (int j = 0; j < g; j++) {
                 if (matrix[i][j] == 1) {
-                    //Log.d(TAG, "There is a monster at this location" + i + "    " + j);
+                    Log.d(TAG, "There is a monster at this location" + i + "    " + j);
                     dotModel.addDot(i, j, R.color.green, 30);
                 }
 
@@ -222,12 +226,7 @@ public class TouchMe extends Activity implements OnTickListener {
 
 
         dotView.setOnCreateContextMenuListener(this);
-       // dotView.setOnTouchListener(new TrackingTouchListener(dotModel));  the next two lines do the exact same thing
-        TrackingTouchListener temp = new TrackingTouchListener(dotModel);
-        dotView.setOnTouchListener(temp);
-
-
-
+        dotView.setOnTouchListener(new TrackingTouchListener(dotModel));
 
         dotView.setOnKeyListener(new OnKeyListener() {
             @Override
@@ -279,8 +278,8 @@ public class TouchMe extends Activity implements OnTickListener {
                     makeDot(dotModel, dotView, Color.GREEN);
                 } });
 
-        final EditText tb1 = (EditText) findViewById(R.id.text1);
-        final EditText tb2 = (EditText) findViewById(R.id.text2);
+        final EditText tb1 = (EditText) findViewById(R.id.level);
+        final EditText tb2 = (EditText) findViewById(R.id.time);
         dotModel.setDotsChangeListener(new Dots.DotsChangeListener() {
             @Override public void onDotsChange(Dots dots) {
                 Dot d = dots.getLastDot();
@@ -292,14 +291,11 @@ public class TouchMe extends Activity implements OnTickListener {
             } });
     }
 
-
-
     /** Install an options menu. */
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.simple_menu, menu);
         return true;
     }
-
 
     /** Respond to an options menu selection. */
     @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -340,7 +336,7 @@ public class TouchMe extends Activity implements OnTickListener {
      * @param view the view in which we're drawing dots
      * @param color the color of the dot
      */
-    void makeDot(Dots dots, DotView view, int color) {
+    void makeMonster(Dots dots, DotView view, int color) { //changed from makeDot, creates a monsterr
         int pad = (DOT_DIAMETER + 2) * 2;
         dots.addDot(
             DOT_DIAMETER + (rand.nextFloat() * (view.getWidth() - pad)),
