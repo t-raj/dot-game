@@ -49,11 +49,14 @@ public class MonsterActivity {
         int x = 0;
         int y = 0;
         int z = 0;
+        int newX;
+        int newY;
         int currentMonster = 0;
+        Log.d(TAG, "grid size: " +g);
         for (int i = 0; i < g; i++) {
-            for (int j = 0; j < g; i++) {
+            for (int j = 0; j < g; j++) {
                 z = 0;
-                Log.d(TAG, "Current monster being edited: ["+i+"]["+j+"]" );
+                Log.d(TAG, "Current spot being checked: ["+i+"]["+j+"]" );
                 if (monsterMatrix[i][j] == 1 || monsterMatrix[i][j] ==  2) {
                     while (z != 3) {
                         currentMonster = monsterMatrix[i][j];
@@ -74,8 +77,20 @@ public class MonsterActivity {
                         if (y == 2) {
                             y = -1;
                         }
-                        if (monsterMatrix[(i + x) % g][(i + y) % g] != 1 || monsterMatrix[(i + x) % g][(i + y) % g] != 2) { //modify this so it only tries 3 times, in case all neighbors are full.
-                            monsterMatrix[(i + x) % g][(i + y) % g] = currentMonster; //space is open, and monster moves to it
+                        newX = i + x;
+                        newY = j + y;
+                        //exception (if x or y are zero, and i or j are zero), cant assign it to a negative index.
+                        if (newX == -1){
+                            newX = g-1;
+                        }
+                        //exception (if x or y are zero, and i or j are zero), cant assign it to a negative index.
+                        if (newY == -1){
+                            newY = g-1;
+                        }
+                        Log.d(TAG, "mod G index: ["+((i+x)%g)+"]["+((j+y)%g)+"]" );
+                        if (monsterMatrix[(newX) % g][(newY) % g] != 1 || monsterMatrix[(newX) % g][(newY) % g] != 2) { //modify this so it only tries 3 times, in case all neighbors are full.
+                            monsterMatrix[(newX) % g][(newY) % g] = currentMonster; //space is open, and monster moves to it
+                            //also want to give this index a "flag" of some sorts. If its moved, and the loop gets to that index later, it shouldnt be moved again.
                             z = 3;//process would repeat until an open space is found. only tries 3 times, otherwise it'll stay put.
                         }
                         else{
