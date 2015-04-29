@@ -52,17 +52,15 @@ public class MonsterActivity {
         int newX;
         int newY;
         int currentMonster = 0;
-        Log.d(TAG, "grid size: " +g);
         for (int i = 0; i < g; i++) {
             for (int j = 0; j < g; j++) {
                 z = 0;
                 Log.d(TAG, "Current spot being checked: ["+i+"]["+j+"]" );
-                if (monsterMatrix[i][j] == 1 || monsterMatrix[i][j] ==  2) {
+                if (monsterMatrix[i][j] == 1 || monsterMatrix[i][j] ==  2) { //if there is a monster at this space.
                     while (z != 3) {
-                        currentMonster = monsterMatrix[i][j];
                         //randomly select two numbers between (x any y, (from -1,1)
                         //the monster will be sent to i+x, i+y
-                        //check if that spot is 1 already, if so, randomly select again
+                        //check if that spot is 1 or 2 already, if so, randomly select again
                         Random random = new Random();
                         currentMonster = random.nextInt(3); // pick a number, 0-2 (if it is 0 or 1, monster is invulnerable. if it is 2, the monster is vulnerable).
                         if(currentMonster == 0) //if number picked is 0, set it 1
@@ -88,8 +86,9 @@ public class MonsterActivity {
                             newY = g-1;
                         }
                         Log.d(TAG, "mod G index: ["+((i+x)%g)+"]["+((j+y)%g)+"]" );
-                        if (monsterMatrix[(newX) % g][(newY) % g] != 1 || monsterMatrix[(newX) % g][(newY) % g] != 2) { //modify this so it only tries 3 times, in case all neighbors are full.
-                            monsterMatrix[(newX) % g][(newY) % g] = currentMonster; //space is open, and monster moves to it
+                        if ((monsterMatrix[(newX) % g][(newY) % g] != 1) && (monsterMatrix[(newX) % g][(newY) % g] != 2)) { //modify this so it only tries 3 times, in case all neighbors are full.
+                            monsterMatrix[(newX) % g][(newY) % g] = currentMonster;//space is open, and monster moves to it
+                            monsterMatrix[i][j] = 0; //need to remove monster from its current spot.
                             //also want to give this index a "flag" of some sorts. If its moved, and the loop gets to that index later, it shouldnt be moved again.
                             z = 3;//process would repeat until an open space is found. only tries 3 times, otherwise it'll stay put.
                         }

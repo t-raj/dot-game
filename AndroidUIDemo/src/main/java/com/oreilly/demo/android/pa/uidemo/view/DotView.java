@@ -86,7 +86,13 @@ public class DotView extends View {
          paint.setStyle(Style.FILL);
           for(Dot dot: dots.getDots())
             {
-                paint.setColor(Color.GREEN);
+                if (dot.getColor() == 0x7f040006){
+                    paint.setColor(Color.YELLOW);
+                }
+                else{
+                    paint.setColor(Color.GREEN);
+                }
+
                 canvas.drawCircle((getWidth()/g)*(dot.getX())+halfSquareW,getHeight()/g*dot.getY()+halfSquareH,dot.getDiameter(),paint);
             }
 

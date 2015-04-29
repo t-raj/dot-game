@@ -7,7 +7,6 @@ import java.util.Random;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
@@ -16,7 +15,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnFocusChangeListener;
 import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,9 +26,8 @@ import com.oreilly.demo.android.pa.uidemo.model.clock.ClockModel;
 import com.oreilly.demo.android.pa.uidemo.model.clock.DefaultClockModel;
 import com.oreilly.demo.android.pa.uidemo.model.clock.OnTickListener;
 import com.oreilly.demo.android.pa.uidemo.view.DotView;
-import com.oreilly.demo.android.pa.uidemo.view.MonsterView;
+
 import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
-import android.graphics.Canvas;
 
 /**
  * Android UI demo program
@@ -146,9 +143,7 @@ public class TouchMe extends Activity implements OnTickListener {
     final Dots dotModel = new Dots();
 
     /** The application view */
-    DotView dotView; //to be removed once the monsterView is correctly hooked up.
-
-    MonsterView monsterView;
+    DotView dotView; //refactor to be called, monster view.
 
     /** The dot generator */
   // DotGenerator dotGenerator;
@@ -171,16 +166,18 @@ public class TouchMe extends Activity implements OnTickListener {
         int g = GRID_SIZE;
         monsterActivityActivity.removeMonsters();
         int[][] matrix = monsterActivityActivity.getMonsterMatrix();
-        for (int i = 0; i < g; i++)
+        dotModel.clearDots();
+        for (int i = 0; i < g; i++) {
             for (int j = 0; j < g; j++) {
-                if (matrix[i][j] == 1) {
+                if (matrix[i][j] == 1) { //invulnerable monster.
                     Log.d(TAG, "There is a monster at this location" + i + "    " + j);
-
                     dotModel.addDot(i, j, R.color.green, 30);
-                    if(matrix[i][j] == 2){
+                }
+
+                if(matrix[i][j] == 2){ //vulnerable monster
                         Log.d(TAG, "There is a monster at this location" + i + "    " + j);
                         dotModel.addDot(i, j, R.color.yellow, 30);
-                    }
+                }
 
 
 
@@ -294,9 +291,9 @@ public class TouchMe extends Activity implements OnTickListener {
                 Dot d = dots.getLastDot();
                 // This code makes the UI unacceptably unresponsive.
                 // ... investigating - in March, 2014, this was not a problem
-                tb1.setText((null == d) ? "" : String.valueOf(d.getX())); // uncommented
-                tb2.setText((null == d) ? "" : String.valueOf(d.getY())); // uncommented
-                dotView.invalidate();
+                //tb1.setText((null == d) ? "" : String.valueOf(d.getX())); // uncommented
+                //tb2.setText((null == d) ? "" : String.valueOf(d.getY())); // uncommented
+                //dotView.invalidate();
             } });
     }
 
