@@ -45,7 +45,7 @@ public class MonsterActivity {
         for (int i = 0; i < g; i++) {
             for (int j = 0; j < g; j++) {
                 z = 0;
-                Log.d(TAG, "Current spot being checked: ["+i+"]["+j+"]" );
+                //Log.d(TAG, "Current spot being checked: ["+i+"]["+j+"]" );
                 if (monsterMatrix[i][j] == 1 || monsterMatrix[i][j] ==  2) { //if there is a monster at this space.
                     while (z != 3) {
                         //randomly select two numbers between (x any y, (from -1,1)
@@ -75,7 +75,7 @@ public class MonsterActivity {
                         if (newY == -1){
                             newY = g-1;
                         }
-                        Log.d(TAG, "mod G index: ["+((i+x)%g)+"]["+((j+y)%g)+"]" );
+                        //Log.d(TAG, "mod G index: ["+((i+x)%g)+"]["+((j+y)%g)+"]" );
                         if ((monsterMatrix[(newX) % g][(newY) % g] != 1) && (monsterMatrix[(newX) % g][(newY) % g] != 2)) { //modify this so it only tries 3 times, in case all neighbors are full.
                             monsterMatrix[(newX) % g][(newY) % g] = currentMonster;//space is open, and monster moves to it
                             monsterMatrix[i][j] = 0; //need to remove monster from its current spot.

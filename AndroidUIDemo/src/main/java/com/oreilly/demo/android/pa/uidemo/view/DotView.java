@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.oreilly.demo.android.pa.uidemo.R;
@@ -60,17 +61,25 @@ public class DotView extends View {
     /**
      * @see android.view.View#onDraw(android.graphics.Canvas)
      */
-
+    //String TAG = "pixel to index: ";
 public int getIndexX(float x)
 {
+    //Log.d(TAG, "original x: " + x);
     int monsterIndexX;
-    monsterIndexX = (int) x/getWidth()*g;
+    float xCalc = x/getWidth()*g;
+    monsterIndexX = (int)  xCalc;
+    //Log.d(TAG, "here is the width pixel count: "+getWidth());
+    //Log.d(TAG, "transformed x: " + xCalc);
     return monsterIndexX;
 }
 public int getIndexY(float y)
 {
+    //Log.d(TAG, "original y: " + y);
     int monsterIndexY;
-    monsterIndexY = (int) y/getWidth()*g;
+    float yCalc = y/getHeight()*g;
+    monsterIndexY = (int) yCalc;
+    //Log.d(TAG, "here is the width pixel count: "+getHeight());
+    //Log.d(TAG, "transformed y: " + yCalc);
     return monsterIndexY;
 }
 
