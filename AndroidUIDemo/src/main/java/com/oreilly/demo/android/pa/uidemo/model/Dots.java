@@ -29,7 +29,7 @@ public class Dots {
     }
 
     /** @return immutable list of dots. */
-    public List<Dot> getDots() { return safeDots; }
+    public List<Dot> getDots() { return dots; }
 
     /**
      * @param x dot horizontal coordinate.

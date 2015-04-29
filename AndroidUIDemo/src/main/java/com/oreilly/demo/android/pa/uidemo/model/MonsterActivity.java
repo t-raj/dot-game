@@ -30,6 +30,10 @@ public class MonsterActivity {
     }
 
     public int[][] getMonsterMatrix(){ return monsterMatrix; }
+    public void setMonsterMatrix(int[][] Matrix){
+        this.monsterMatrix = Matrix;
+
+    }
 
     public int[][] monsterGridMove(){ // 0's represent empty space, 1's represent invulnerable monsters, 2's represent vulnerable monsters.
         int x = 0;

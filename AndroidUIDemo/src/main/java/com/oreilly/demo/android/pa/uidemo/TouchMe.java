@@ -48,6 +48,8 @@ public class TouchMe extends Activity implements OnTickListener {
         TrackingTouchListener(Dots dots) { mDots = dots; }
 
         @Override public boolean onTouch(View v, MotionEvent evt) {
+
+
             int n;
             int idx;
             int action = evt.getAction();
@@ -65,34 +67,25 @@ public class TouchMe extends Activity implements OnTickListener {
                     tracks.remove(Integer.valueOf(evt.getPointerId(idx)));
                     break;
 
-                case MotionEvent.ACTION_MOVE:
-                    n = evt.getHistorySize();
-                    for (Integer i: tracks) {
-                        idx = evt.findPointerIndex(i.intValue());
-                        for (int j = 0; j < n; j++) {
-                            addDot( //switch to a destroyMonster method
-                                mDots,
-                                evt.getHistoricalX(idx, j),
-                                evt.getHistoricalY(idx, j),
-                                evt.getHistoricalPressure(idx, j),
-                                evt.getHistoricalSize(idx, j));
-                        }
-                    }
-                    break;
+
 
 
                 default:
+
                     return false;
             }
 
             for (Integer i: tracks) {   //if the indices coincide with a space where a vulnerable monster is, remove it from the grid.
                 idx = evt.findPointerIndex(i.intValue());
+
                 addDot(
                     mDots,
                     evt.getX(idx),
                     evt.getY(idx),
                     evt.getPressure(idx),
+
                     evt.getSize(idx));
+
             }
 
             return true;
@@ -147,6 +140,16 @@ public class TouchMe extends Activity implements OnTickListener {
 
     /** The dot generator */
   // DotGenerator dotGenerator;
+    public void removeMonster(int x, int y)
+    {
+       int[][] temp = monsterActivityActivity.getMonsterMatrix();
+       if(temp[x][y]== 2)
+       {
+           temp[x][y]=0;
+           monsterActivityActivity.setMonsterMatrix(temp);
+
+       }
+    }
 
     public void onTick(){
         monsterMove();
@@ -160,8 +163,6 @@ public class TouchMe extends Activity implements OnTickListener {
                 v.invalidate();
             }
         });
-
-
         String TAG = "MonsterActivity log: ";
         int g = GRID_SIZE;
         monsterActivityActivity.monsterGridMove();
@@ -195,8 +196,6 @@ public class TouchMe extends Activity implements OnTickListener {
     /** Called when the activity is first created. */
     @Override public void onCreate(Bundle state) {
         String TAG = "MonsterActivity log: ";
-
-
         super.onCreate(state);
         int g = GRID_SIZE, k = 0;
         int[][] matrix = monsterActivityActivity.getMonsterMatrix();
