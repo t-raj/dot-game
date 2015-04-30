@@ -39,11 +39,9 @@ public class MonsterActivity {
     }
 
     public int[][] monsterGridMove() { // 0's represent empty space, 1's represent invulnerable monsters, 2's represent vulnerable monsters.
-        int x = 0;
-        int y = 0;
-        int z = 0;
-        int newX;
-        int newY;
+
+        int newX,newY,x,y,z;
+        Random random = new Random();
         int currentMonster = 0;
         int[][] skipList = new int[g][g];
         for (int i = 0; i < g; i++) {
@@ -51,13 +49,13 @@ public class MonsterActivity {
                 z = 0;
                 //Log.d(TAG, "Current spot being checked: ["+i+"]["+j+"]" );
                 if ((monsterMatrix[i][j] == 1 || monsterMatrix[i][j] == 2) && skipList[i][j] != 1) { //if there is a monster at this space.
-                    Log.d(TAG, "Current spot being checked: [" + i + "][" + j + "]");
+                   // Log.d(TAG, "Current spot being checked: [" + i + "][" + j + "]");
                     if (monsterMatrix[i][j] == 1 || monsterMatrix[i][j] == 2) { //if there is a monster at this space.
                         while (z != 3) {
                             //randomly select two numbers between (x any y, (from -1,1)
                             //the monster will be sent to i+x, i+y
                             //check if that spot is 1 or 2 already, if so, randomly select again
-                            Random random = new Random();
+
                             currentMonster = random.nextInt(6); // pick a number, 0-4 (if it is 0 or 1, monster is invulnerable. if it is 2, the monster is vulnerable).
                             if (currentMonster == 0 || currentMonster > 2) //if number picked is 0, set it 1
                             {
