@@ -52,18 +52,16 @@ public class Dots {
     {
         MonsterY = y;
         MonsterX = x;
-
-
-
     }
+
    public float getX()
    {
        return MonsterX;
    }
-public float getY()
-{
-    return MonsterY;
-}
+    public float getY()
+    {
+        return MonsterY;
+    }
 
     private void notifyListener() {
         if (null != dotsChangeListener) {

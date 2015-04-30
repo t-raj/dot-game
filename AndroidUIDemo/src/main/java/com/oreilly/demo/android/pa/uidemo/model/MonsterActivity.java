@@ -1,9 +1,8 @@
 package com.oreilly.demo.android.pa.uidemo.model;
 
-import android.util.Log;
-
-import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
 import java.util.Random;
+
+import static com.oreilly.demo.android.pa.uidemo.constants.Constants.GRID_SIZE;
 
 /**
  * Created by akelsch on 4/19/2015.
@@ -98,7 +97,7 @@ public class MonsterActivity {
     }
 
 
-    void removeMonster(int x, int y){ //call this when a monster is touched.
+    public void removeMonster(int x, int y){ //call this when a monster is touched.
         monsterMatrix[x][y] = 0;
     }
 }
