@@ -47,6 +47,7 @@ import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
 public class TouchMe extends Activity implements OnTickListener {
     /** Dot diameter */
     ClockModel cl  = new DefaultClockModel();
+    int score;
     public static final int DOT_DIAMETER = 6;
     public MonsterActivity monsterActivityActivity = new MonsterActivity();
     private int time1;
@@ -113,6 +114,7 @@ public class TouchMe extends Activity implements OnTickListener {
   // DotGenerator dotGenerator;
     public void removeMonster()
     {
+
         int g = GRID_SIZE;
         Float tempX = dotModel.getX();
         Float tempY = dotModel.getY();
@@ -172,10 +174,8 @@ public class TouchMe extends Activity implements OnTickListener {
         insidePopupButton.setTextColor(Color.RED);
         insidePopupButton.setText("Game Over");
         layoutofPop.setOrientation(LinearLayout.VERTICAL);
-
-
-
         layoutofPop.addView(insidePopupButton);
+
 
         popupMessage = new PopupWindow(layoutofPop,LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
         popupMessage.setContentView(layoutofPop);
@@ -187,38 +187,14 @@ public class TouchMe extends Activity implements OnTickListener {
     public void onTick(){
         time1--;
         if(time1 == 0){
-
-
             Looper.prepare();
             runOnUiThread(new Runnable() {
-                @Override
+               @Override
                 public void run() {
-
-
                     createPopup();
                 }
             });
-
-
-
-
-
-
-
-
-
-
-
-            cl.stop();
-
-
-
-
-
-
-
-
-        }
+            cl.stop();}
         else{
             monsterMove();
 
