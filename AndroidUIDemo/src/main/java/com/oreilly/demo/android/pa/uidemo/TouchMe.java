@@ -145,8 +145,8 @@ public class TouchMe extends Activity implements OnTickListener {
     }
     public void onTick(){
         time1--;
-        Log.d("Score", "The score is "+ score);
-        Log.d("Max monster", "Max monster is: "+ monsterActivityActivity.getMonsterTally());
+        //Log.d("Score", "The score is "+ score);
+       // Log.d("Max monster", "Max monster is: "+ monsterActivityActivity.getMonsterTally());
         updateTime(time1);
         if(time1 == 0 || score == monsterActivityActivity.getMonsterTally()){
             Looper.prepare();
