@@ -28,7 +28,7 @@ public class DefaultClockModel implements ClockModel {
 				// fire event
 				listener.onTick();
 			}
-		}, /*initial delay*/ 1500, /*periodic delay*/ 1500); // sets the even to fire every second?
+		}, /*initial delay*/ 1000, /*periodic delay*/ 1000); // sets the even to fire every second?
 	}
 
 	@Override

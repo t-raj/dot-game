@@ -42,11 +42,12 @@ public class MonsterActivity {
         int newX;
         int newY;
         int currentMonster = 0;
+        int[][] skipList = new int[g][g];
         for (int i = 0; i < g; i++) {
             for (int j = 0; j < g; j++) {
                 z = 0;
                 //Log.d(TAG, "Current spot being checked: ["+i+"]["+j+"]" );
-                if (monsterMatrix[i][j] == 1 || monsterMatrix[i][j] ==  2) { //if there is a monster at this space.
+                if ((monsterMatrix[i][j] == 1 || monsterMatrix[i][j] ==  2)&& skipList[i][j] != 1) { //if there is a monster at this space.
                     while (z != 3) {
                         //randomly select two numbers between (x any y, (from -1,1)
                         //the monster will be sent to i+x, i+y
@@ -79,6 +80,7 @@ public class MonsterActivity {
                         if ((monsterMatrix[(newX) % g][(newY) % g] != 1) && (monsterMatrix[(newX) % g][(newY) % g] != 2)) { //modify this so it only tries 3 times, in case all neighbors are full.
                             monsterMatrix[(newX) % g][(newY) % g] = currentMonster;//space is open, and monster moves to it
                             monsterMatrix[i][j] = 0; //need to remove monster from its current spot.
+                            skipList[(newX) % g][(newY) % g] = 1;
                             //also want to give this index a "flag" of some sorts. If its moved, and the loop gets to that index later, it shouldnt be moved again.
                             z = 3;//process would repeat until an open space is found. only tries 3 times, otherwise it'll stay put.
                         }
