@@ -43,9 +43,10 @@ public class MonsterActivity {
         int newX;
         int newY;
         int currentMonster = 0;
+        boolean flag = false;
         for (int i = 0; i < g; i++) {
             for (int j = 0; j < g; j++) {
-                boolean flag = false;
+
                 z = 0;
                 Log.d(TAG, "Current spot being checked: ["+i+"]["+j+"]" );
                 if (monsterMatrix[i][j] == 1 || monsterMatrix[i][j] ==  2) { //if there is a monster at this space.
