@@ -24,6 +24,7 @@ import com.oreilly.demo.android.pa.uidemo.model.Dots;
 import com.oreilly.demo.android.pa.uidemo.model.MonsterActivity;
 import com.oreilly.demo.android.pa.uidemo.model.clock.ClockModel;
 import com.oreilly.demo.android.pa.uidemo.model.clock.DefaultClockModel;
+import com.oreilly.demo.android.pa.uidemo.model.clock.DefaultTimeModel;
 import com.oreilly.demo.android.pa.uidemo.model.clock.OnTickListener;
 import com.oreilly.demo.android.pa.uidemo.view.DotView;
 
@@ -36,6 +37,7 @@ public class TouchMe extends Activity implements OnTickListener {
     /** Dot diameter */
     public static final int DOT_DIAMETER = 6;
     public MonsterActivity monsterActivityActivity = new MonsterActivity();
+    DefaultTimeModel clock = new DefaultTimeModel();
     public static int level; //current level
     public static int time; //time left in current level
 
@@ -148,7 +150,15 @@ public class TouchMe extends Activity implements OnTickListener {
 
     public void onTick(){
 
-        monsterMove();
+
+        if(clock.getRuntime()== 0)
+        {
+            return;
+        }
+        else{
+            monsterMove();
+
+        }
 
     }
 
@@ -194,6 +204,9 @@ public class TouchMe extends Activity implements OnTickListener {
     @Override public void onCreate(Bundle state) {
         String TAG = "MonsterActivity log: ";
         super.onCreate(state);
+        clock.setRuntime(15);
+
+
         int g = GRID_SIZE, k = 0;
         int[][] matrix = monsterActivityActivity.getMonsterMatrix();
         for (int i = 0; i < g; i++)
@@ -208,9 +221,10 @@ public class TouchMe extends Activity implements OnTickListener {
 
 
 
-        ClockModel clock  = new DefaultClockModel();
-        clock.setOnTickListener(this);
-        clock.start();
+        ClockModel cl  = new DefaultClockModel();
+        cl.setOnTickListener(this);
+        cl.start();
+
 
         // install the view
         setContentView(R.layout.main);

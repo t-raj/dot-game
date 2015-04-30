@@ -33,13 +33,10 @@ public class DefaultTimeModel implements TimeModel {
 		return runningTime;
 	}
 
-   /* @Override
-	public void setLaptime() {
-		lapTime = runningTime;
-	}
+    public void setRuntime(int time)
+    {
+        runningTime = time;
+    }
 
-    @Override
-	public int getLaptime() {
-		return lapTime;
-	}*/
+
 }

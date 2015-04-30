@@ -12,4 +12,5 @@ public interface TimeModel {
 	//void incRuntime();
     void decRuntime();
 	public int getRuntime();
+    void setRuntime(int time);
 }
