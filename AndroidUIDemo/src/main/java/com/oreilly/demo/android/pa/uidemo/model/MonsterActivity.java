@@ -1,16 +1,24 @@
 package com.oreilly.demo.android.pa.uidemo.model;
 
-import java.util.Random;
+import android.util.Log;
 
-import static com.oreilly.demo.android.pa.uidemo.constants.Constants.GRID_SIZE;
+import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
+import java.util.Random;
 
 /**
  * Created by akelsch on 4/19/2015.
  */
 public class MonsterActivity {
     private int g = GRID_SIZE; //size of the grid.
-    private String TAG = "MonsterActivity log: ";
+    //private String TAG = "MonsterActivity log: ";
     private int[][] monsterMatrix = new int[g][g];
+    int monsterTally = 0;
+
+    public int getMonsterTally()
+    {
+        return monsterTally;
+    }
+
 
     public MonsterActivity() {
         int x;
@@ -20,10 +28,17 @@ public class MonsterActivity {
                 x = random.nextInt(3);
                 if (x == 2) // to favor the odds for the board to be approximately 1/3 filled on start.
                 {
+
                     x = 0;
+
+                }
+                if(x == 1)
+                {
+                    monsterTally++;
                 }
                 //Log.d(TAG, "x is: " +x);
                 monsterMatrix[i][j] = x;
+
             }
         }
     }
@@ -32,13 +47,9 @@ public class MonsterActivity {
         return monsterMatrix;
     }
 
-    public void setMonsterMatrix(int[][] Matrix) {
-        this.monsterMatrix = Matrix;
-
-    }
+    public void setMonsterMatrix(int[][] Matrix) { this.monsterMatrix = Matrix;}
 
     public int[][] monsterGridMove() { // 0's represent empty space, 1's represent invulnerable monsters, 2's represent vulnerable monsters.
-
         int newX,newY,x,y,z;
         Random random = new Random();
         int currentMonster = 0;
@@ -56,9 +67,8 @@ public class MonsterActivity {
                             //check if that spot is 1 or 2 already, if so, randomly select again
 
                             currentMonster = random.nextInt(6); // pick a number, 0-4 (if it is 0 or 1, monster is invulnerable. if it is 2, the monster is vulnerable).
-                            if (currentMonster == 0 || currentMonster > 2) //if number picked is 0, set it 1
-                            {
-                                currentMonster = 1;
+                            if (currentMonster == 0 || currentMonster > 2){     //if number picked is 0, set it 1
+                              currentMonster = 1;
                             }
                             x = random.nextInt(3);
                             if (x == 2) {
@@ -94,10 +104,5 @@ public class MonsterActivity {
             }
         }
             return monsterMatrix;
-    }
-
-
-    public void removeMonster(int x, int y){ //call this when a monster is touched.
-        monsterMatrix[x][y] = 0;
     }
 }

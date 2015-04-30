@@ -48,20 +48,18 @@ public class Dots {
         dots.clear();
         notifyListener();
     }
-    public void setCoords(float x, float y)
-    {
+    public void setCoords(float x, float y){
         MonsterY = y;
         MonsterX = x;
     }
-
-   public float getX()
+    public float getX()
    {
        return MonsterX;
    }
     public float getY()
-    {
-        return MonsterY;
-    }
+{
+    return MonsterY;
+}
 
     private void notifyListener() {
         if (null != dotsChangeListener) {
