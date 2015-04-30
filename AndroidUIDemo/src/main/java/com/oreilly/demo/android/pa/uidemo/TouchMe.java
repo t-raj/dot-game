@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Random;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +20,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 
 import com.oreilly.demo.android.pa.uidemo.model.Dot;
 import com.oreilly.demo.android.pa.uidemo.model.Dots;
@@ -35,9 +38,11 @@ import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
  */
 public class TouchMe extends Activity implements OnTickListener {
     /** Dot diameter */
+    ClockModel cl  = new DefaultClockModel();
     public static final int DOT_DIAMETER = 6;
     public MonsterActivity monsterActivityActivity = new MonsterActivity();
-    DefaultTimeModel clock = new DefaultTimeModel();
+    private int time1;
+
     public static int level; //current level
     public static int time; //time left in current level
 
@@ -149,11 +154,20 @@ public class TouchMe extends Activity implements OnTickListener {
     }
 
     public void onTick(){
+        time1--;
+        if(time1 == 0){
+            PopupWindow wind = new PopupWindow(20,20);
+            wind.showAtLocation(findViewById(R.id.dots), Gravity.CENTER,200,200);
+            wind.getBackground();
+            cl.stop();
 
 
-        if(clock.getRuntime()== 0)
-        {
-            return;
+
+
+
+
+
+
         }
         else{
             monsterMove();
@@ -204,7 +218,9 @@ public class TouchMe extends Activity implements OnTickListener {
     @Override public void onCreate(Bundle state) {
         String TAG = "MonsterActivity log: ";
         super.onCreate(state);
-        clock.setRuntime(15);
+       time1 = 10;// change to round 1 time-- 10 is just to check
+
+
 
 
         int g = GRID_SIZE, k = 0;
@@ -221,9 +237,11 @@ public class TouchMe extends Activity implements OnTickListener {
 
 
 
-        ClockModel cl  = new DefaultClockModel();
+
         cl.setOnTickListener(this);
         cl.start();
+
+
 
 
         // install the view

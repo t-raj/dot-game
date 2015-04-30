@@ -4,10 +4,16 @@ package com.oreilly.demo.android.pa.uidemo.model.clock;
 import static edu.luc.etl.cs313.android.simplestopwatch.common.Constants.SEC_PER_HOUR;
 import static edu.luc.etl.cs313.android.simplestopwatch.common.Constants.SEC_PER_TICK;
 */
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * An implementation of the stopwatch data model. Added from project 4
  */
 public class DefaultTimeModel implements TimeModel {
+    private Timer timer;
+    private OnTickListener listener;
 
 	private int runningTime = 0;
 
@@ -39,4 +45,6 @@ public class DefaultTimeModel implements TimeModel {
     }
 
 
-}
+    }
+
+
