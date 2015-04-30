@@ -154,7 +154,9 @@ public class TouchMe extends Activity implements OnTickListener {
     }
 
     public void onTick(){
+
         monsterMove();
+
     }
 
     public void monsterMove(){
