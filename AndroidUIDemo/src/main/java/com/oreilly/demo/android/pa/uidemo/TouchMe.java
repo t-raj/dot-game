@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
@@ -159,28 +160,44 @@ public class TouchMe extends Activity implements OnTickListener {
 
        }
     }
+    public void createPopup()
+    {
+        final PopupWindow popupMessage;
+        TextView popupText;
+        Button insidePopupButton;
+        LinearLayout layoutofPop;
+        popupText = new TextView(this);
+        insidePopupButton = new Button(this);
+        layoutofPop = new LinearLayout(this);
+        insidePopupButton.setTextColor(Color.RED);
+        insidePopupButton.setText("Game Over");
+        layoutofPop.setOrientation(LinearLayout.VERTICAL);
+
+
+
+        layoutofPop.addView(insidePopupButton);
+
+        popupMessage = new PopupWindow(layoutofPop,LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+        popupMessage.setContentView(layoutofPop);
+
+        popupMessage.showAtLocation(findViewById(R.id.dots),Gravity.CENTER,100,100);
+
+    }
 
     public void onTick(){
         time1--;
         if(time1 == 0){
-            PopupWindow popupMessage;
-            TextView popupText;
-            Button insidePopupButton;
-            LinearLayout layoutofPop;
-            popupText = new TextView(this);
-            insidePopupButton = new Button(this);
-            layoutofPop = new LinearLayout(this);
-            insidePopupButton.setText("Click to dismiss");
-            popupText.setText("Game over!");
-            layoutofPop.setOrientation(LinearLayout.VERTICAL);
 
-            layoutofPop.addView(popupText);
-            layoutofPop.addView(insidePopupButton);
 
-            popupMessage = new PopupWindow(layoutofPop,LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
-            popupMessage.setContentView(layoutofPop);
-            popupMessage.showAtLocation(findViewById(R.id.dots),Gravity.CENTER,100,100);
+            Looper.prepare();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
+
+                    createPopup();
+                }
+            });
 
 
 
@@ -330,16 +347,7 @@ public class TouchMe extends Activity implements OnTickListener {
             } });
 */
         // wire up the controller
-        ((Button) findViewById(R.id.button1)).setOnClickListener(
-            new Button.OnClickListener() {
-                @Override public void onClick(View v) {
-                    makeDot(dotModel, dotView, Color.RED);
-                } });
-        ((Button) findViewById(R.id.button2)).setOnClickListener(
-            new Button.OnClickListener() {
-                @Override public void onClick(View v) {
-                    makeDot(dotModel, dotView, Color.GREEN);
-                } });
+
 
         final EditText tb1 = (EditText) findViewById(R.id.level);
         final EditText tb2 = (EditText) findViewById(R.id.time);
