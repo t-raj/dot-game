@@ -37,6 +37,7 @@ public class MonsterActivity {
 
     public int[][] monsterGridMove(){ // 0's represent empty space, 1's represent invulnerable monsters, 2's represent vulnerable monsters.
         int x = 0;
+
         int y = 0;
         int z = 0;
         int newX;
@@ -44,8 +45,9 @@ public class MonsterActivity {
         int currentMonster = 0;
         for (int i = 0; i < g; i++) {
             for (int j = 0; j < g; j++) {
+                boolean flag = false;
                 z = 0;
-                //Log.d(TAG, "Current spot being checked: ["+i+"]["+j+"]" );
+                Log.d(TAG, "Current spot being checked: ["+i+"]["+j+"]" );
                 if (monsterMatrix[i][j] == 1 || monsterMatrix[i][j] ==  2) { //if there is a monster at this space.
                     while (z != 3) {
                         //randomly select two numbers between (x any y, (from -1,1)
@@ -76,14 +78,18 @@ public class MonsterActivity {
                             newY = g-1;
                         }
                         //Log.d(TAG, "mod G index: ["+((i+x)%g)+"]["+((j+y)%g)+"]" );
-                        if ((monsterMatrix[(newX) % g][(newY) % g] != 1) && (monsterMatrix[(newX) % g][(newY) % g] != 2)) { //modify this so it only tries 3 times, in case all neighbors are full.
+                        if ((monsterMatrix[(newX) % g][(newY) % g] != 1) && (monsterMatrix[(newX) % g][(newY) % g] != 2)&& flag == false) { //modify this so it only tries 3 times, in case all neighbors are full.
                             monsterMatrix[(newX) % g][(newY) % g] = currentMonster;//space is open, and monster moves to it
                             monsterMatrix[i][j] = 0; //need to remove monster from its current spot.
+                            flag = true;
+
+
                             //also want to give this index a "flag" of some sorts. If its moved, and the loop gets to that index later, it shouldnt be moved again.
                             z = 3;//process would repeat until an open space is found. only tries 3 times, otherwise it'll stay put.
                         }
                         else{
                             z++;
+                            flag = false;
                         }
                     }
                 }
