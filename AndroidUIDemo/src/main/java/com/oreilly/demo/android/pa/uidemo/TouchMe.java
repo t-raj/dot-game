@@ -1,9 +1,13 @@
 package com.oreilly.demo.android.pa.uidemo;
 
+
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -20,7 +24,10 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.view.ViewGroup.LayoutParams;
 
 import com.oreilly.demo.android.pa.uidemo.model.Dot;
 import com.oreilly.demo.android.pa.uidemo.model.Dots;
@@ -156,9 +163,35 @@ public class TouchMe extends Activity implements OnTickListener {
     public void onTick(){
         time1--;
         if(time1 == 0){
-            PopupWindow wind = new PopupWindow(20,20);
-            wind.showAtLocation(findViewById(R.id.dots), Gravity.CENTER,200,200);
-            wind.getBackground();
+            PopupWindow popupMessage;
+            TextView popupText;
+            Button insidePopupButton;
+            LinearLayout layoutofPop;
+            popupText = new TextView(this);
+            insidePopupButton = new Button(this);
+            layoutofPop = new LinearLayout(this);
+            insidePopupButton.setText("Click to dismiss");
+            popupText.setText("Game over!");
+            layoutofPop.setOrientation(LinearLayout.VERTICAL);
+
+            layoutofPop.addView(popupText);
+            layoutofPop.addView(insidePopupButton);
+
+            popupMessage = new PopupWindow(layoutofPop,LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
+            popupMessage.setContentView(layoutofPop);
+            popupMessage.showAtLocation(findViewById(R.id.dots),Gravity.CENTER,100,100);
+
+
+
+
+
+
+
+
+
+
+
+
             cl.stop();
 
 
