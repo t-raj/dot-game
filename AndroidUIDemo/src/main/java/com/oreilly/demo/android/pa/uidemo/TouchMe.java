@@ -47,6 +47,8 @@ import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
 public class TouchMe extends Activity implements OnTickListener {
     /** Dot diameter */
     ClockModel cl  = new DefaultClockModel();
+
+
     int score;
     public static final int DOT_DIAMETER = 6;
     public MonsterActivity monsterActivityActivity = new MonsterActivity();
@@ -97,6 +99,7 @@ public class TouchMe extends Activity implements OnTickListener {
                 TouchMe.this.removeMonster();
 
 
+
             }
 
             return true;
@@ -124,6 +127,9 @@ public class TouchMe extends Activity implements OnTickListener {
        int[][] temp = monsterActivityActivity.getMonsterMatrix();
        if(temp[ux][uy]== 2)
        {
+           score++;
+           updateScore(score);
+
            temp[ux][uy]=0;
            monsterActivityActivity.setMonsterMatrix(temp);
            runOnUiThread(new Runnable() {
@@ -172,7 +178,7 @@ public class TouchMe extends Activity implements OnTickListener {
         insidePopupButton = new Button(this);
         layoutofPop = new LinearLayout(this);
         insidePopupButton.setTextColor(Color.RED);
-        insidePopupButton.setText("Game Over");
+        insidePopupButton.setText("Game Over!\n Your score is: " + score);
         layoutofPop.setOrientation(LinearLayout.VERTICAL);
         layoutofPop.addView(insidePopupButton);
 
@@ -186,6 +192,7 @@ public class TouchMe extends Activity implements OnTickListener {
 
     public void onTick(){
         time1--;
+        updateTime(time1);
         if(time1 == 0){
             Looper.prepare();
             runOnUiThread(new Runnable() {
@@ -244,11 +251,7 @@ public class TouchMe extends Activity implements OnTickListener {
     @Override public void onCreate(Bundle state) {
         String TAG = "MonsterActivity log: ";
         super.onCreate(state);
-       time1 = 10;// change to round 1 time-- 10 is just to check
-
-
-
-
+        time1 = round1time;// change to round 1 time-- 10 is just to check
         int g = GRID_SIZE, k = 0;
         int[][] matrix = monsterActivityActivity.getMonsterMatrix();
         for (int i = 0; i < g; i++)
@@ -260,15 +263,8 @@ public class TouchMe extends Activity implements OnTickListener {
 
 
             }
-
-
-
-
         cl.setOnTickListener(this);
         cl.start();
-
-
-
 
         // install the view
         setContentView(R.layout.main);
@@ -276,58 +272,19 @@ public class TouchMe extends Activity implements OnTickListener {
         // find the dots view
         dotView = (DotView) findViewById(R.id.dots);
         dotView.setDots(dotModel);
-
-
         dotView.setOnCreateContextMenuListener(this);
+
         // dotView.setOnTouchListener(new TrackingTouchListener(dotModel));  the next two lines do the exact same thing
         TrackingTouchListener temp = new TrackingTouchListener(dotModel);
         dotView.setOnTouchListener(temp);
+        EditText tb1 = (EditText) findViewById(R.id.level);
+        EditText tb2 = (EditText) findViewById(R.id.time);
 
 
-        dotView.setOnKeyListener(new OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (KeyEvent.ACTION_DOWN != event.getAction()) {
-                    return false;
-                }
-
-                int color;
-                switch (keyCode) {
-                    case KeyEvent.KEYCODE_SPACE:
-                        color = Color.MAGENTA;
-                        break;
-                    case KeyEvent.KEYCODE_ENTER:
-                        color = Color.BLUE;
-                        break;
-                    default:
-                        return false;
-                }
-
-                makeDot(dotModel, dotView, color);
-
-                return true;
-            } });
 
 
-      /*  dotView.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus && (null != dotGenerator)) {
-                    dotGenerator.done();
-                    dotGenerator = null;
-                }
-                else if (hasFocus && (null == dotGenerator)) {
-                    dotGenerator
-                    = new DotGenerator(dotModel, dotView, Color.BLACK);
-                    new Thread(dotGenerator).start();
-                }
-            } });
-*/
-        // wire up the controller
 
-
-        final EditText tb1 = (EditText) findViewById(R.id.level);
-        final EditText tb2 = (EditText) findViewById(R.id.time);
-        dotModel.setDotsChangeListener(new Dots.DotsChangeListener() {
+           dotModel.setDotsChangeListener(new Dots.DotsChangeListener() {
             @Override public void onDotsChange(Dots dots) {
                 Dot d = dots.getLastDot();
                 // This code makes the UI unacceptably unresponsive.
@@ -342,6 +299,37 @@ public class TouchMe extends Activity implements OnTickListener {
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.simple_menu, menu);
         return true;
+    }
+    public void updateScore(int score1)
+    {
+        // UI adapter responsibility to schedule incoming events on UI thread
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                final TextView tvS = (TextView) findViewById(R.id.level);
+
+                final int score1 = score; //% Constants.SEC_PER_MIN; allows for timer to go up to 99.
+
+                tvS.setText(Integer.toString(score1));
+
+            }
+        });
+    }
+
+    public void updateTime(int time)
+    {
+        // UI adapter responsibility to schedule incoming events on UI thread
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                final TextView tvS = (TextView) findViewById(R.id.time);
+
+                final int time = time1; //% Constants.SEC_PER_MIN; allows for timer to go up to 99.
+
+                tvS.setText(Integer.toString(time));
+
+            }
+        });
     }
 
     /** Respond to an options menu selection. */
