@@ -1,8 +1,4 @@
 package com.oreilly.demo.android.pa.uidemo;
-
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -47,30 +43,17 @@ import static com.oreilly.demo.android.pa.uidemo.constants.Constants.*;
 public class TouchMe extends Activity implements OnTickListener {
     /** Dot diameter */
     ClockModel cl  = new DefaultClockModel();
-
-
-    int score;
+    int score,time1;
     public static final int DOT_DIAMETER = 6;
     public MonsterActivity monsterActivityActivity = new MonsterActivity();
-    private int time1;
-
-    public static int level; //current level
-    public static int time; //time left in current level
-
 
     /** Listen for taps. */
     private final class TrackingTouchListener implements View.OnTouchListener
     {
-
         private final Dots mDots;
         private List<Integer> tracks = new ArrayList<Integer>();
-
         TrackingTouchListener(Dots dots) { mDots = dots; }
-
         @Override public boolean onTouch(View v, MotionEvent evt) {
-
-
-            int n;
             int idx;
             int action = evt.getAction();
             switch (action & MotionEvent.ACTION_MASK) {
@@ -86,23 +69,15 @@ public class TouchMe extends Activity implements OnTickListener {
                             >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
                     tracks.remove(Integer.valueOf(evt.getPointerId(idx)));
                     break;
-
-
                 default:
-
                     return false;
             }
-
             for (Integer i : tracks) {   //if the indices coincide with a space where a vulnerable monster is, remove it from the grid.
                 idx = evt.findPointerIndex(i.intValue());
                 mDots.setCoords(evt.getX(idx), evt.getY(idx));
                 TouchMe.this.removeMonster();
-
-
-
             }
-
-            return true;
+                return true;
         }
     }
     private final Random rand = new Random();
@@ -117,19 +92,16 @@ public class TouchMe extends Activity implements OnTickListener {
   // DotGenerator dotGenerator;
     public void removeMonster()
     {
-
         int g = GRID_SIZE;
         Float tempX = dotModel.getX();
         Float tempY = dotModel.getY();
         int ux = dotView.getIndexX(tempX);
         int uy = dotView.getIndexY(tempY);
-
-       int[][] temp = monsterActivityActivity.getMonsterMatrix();
+        int[][] temp = monsterActivityActivity.getMonsterMatrix();
        if(temp[ux][uy]== 2)
        {
            score++;
            updateScore(score);
-
            temp[ux][uy]=0;
            monsterActivityActivity.setMonsterMatrix(temp);
            runOnUiThread(new Runnable() {
@@ -146,54 +118,37 @@ public class TouchMe extends Activity implements OnTickListener {
                        //Log.d(TAG, "There is a monster at this location" + i + "    " + j);
                        dotModel.addDot(i, j, R.color.green, 30);
                    }
-
                    if(temp[i][j] == 2){ //vulnerable monster
                        //Log.d(TAG, "There is a monster at this location" + i + "    " + j);
                        dotModel.addDot(i, j, R.color.yellow, 30);
                    }
-
-
-
-
-                   // Add the actual monsters to the screen in this loop
-
                }
-
-
            }
-
            dotView.setDots(dotModel);
-
-
-
        }
     }
     public void createPopup()
     {
-        final PopupWindow popupMessage;
+        final PopupWindow popupwind;
         TextView popupText;
         Button insidePopupButton;
         LinearLayout layoutofPop;
-        popupText = new TextView(this);
         insidePopupButton = new Button(this);
         layoutofPop = new LinearLayout(this);
         insidePopupButton.setTextColor(Color.RED);
         insidePopupButton.setText("Game Over!\n Your score is: " + score);
         layoutofPop.setOrientation(LinearLayout.VERTICAL);
         layoutofPop.addView(insidePopupButton);
-
-
-        popupMessage = new PopupWindow(layoutofPop,LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
-        popupMessage.setContentView(layoutofPop);
-
-        popupMessage.showAtLocation(findViewById(R.id.dots),Gravity.CENTER,100,100);
-
+        popupwind = new PopupWindow(layoutofPop,LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+        popupwind.setContentView(layoutofPop);
+        popupwind.showAtLocation(findViewById(R.id.dots),Gravity.CENTER,100,100);
     }
-
     public void onTick(){
         time1--;
+        Log.d("Score", "The score is "+ score);
+        Log.d("Max monster", "Max monster is: "+ monsterActivityActivity.getMonsterTally());
         updateTime(time1);
-        if(time1 == 0){
+        if(time1 == 0 || score == monsterActivityActivity.getMonsterTally()){
             Looper.prepare();
             runOnUiThread(new Runnable() {
                @Override
@@ -204,9 +159,7 @@ public class TouchMe extends Activity implements OnTickListener {
             cl.stop();}
         else{
             monsterMove();
-
         }
-
     }
 
     public void monsterMove(){
@@ -225,25 +178,16 @@ public class TouchMe extends Activity implements OnTickListener {
         for (int i = 0; i < g; i++) {
             for (int j = 0; j < g; j++) {
                 if (matrix[i][j] == 1) { //invulnerable monster.
-                    Log.d(TAG, "There is a monster at this location" + i + "    " + j);
+                   // Log.d(TAG, "There is a monster at this location" + i + "    " + j);
                     dotModel.addDot(i, j, R.color.green, 30);
                 }
-
                 if(matrix[i][j] == 2){ //vulnerable monster
-                        Log.d(TAG, "There is a monster at this location" + i + "    " + j);
+                        //Log.d(TAG, "There is a monster at this location" + i + "    " + j);
                         dotModel.addDot(i, j, R.color.yellow, 30);
                 }
-
-
-
-
                     // Add the actual monsters to the screen in this loop
-
                 }
-
-
             }
-
         dotView.setDots(dotModel);
     }
 
@@ -260,8 +204,6 @@ public class TouchMe extends Activity implements OnTickListener {
                     Log.d(TAG, "There is a monster at this location" + i + "    " + j);
                     dotModel.addDot(i, j, R.color.green, 30);
                 }
-
-
             }
         cl.setOnTickListener(this);
         cl.start();
@@ -277,14 +219,7 @@ public class TouchMe extends Activity implements OnTickListener {
         // dotView.setOnTouchListener(new TrackingTouchListener(dotModel));  the next two lines do the exact same thing
         TrackingTouchListener temp = new TrackingTouchListener(dotModel);
         dotView.setOnTouchListener(temp);
-        EditText tb1 = (EditText) findViewById(R.id.level);
-        EditText tb2 = (EditText) findViewById(R.id.time);
-
-
-
-
-
-           dotModel.setDotsChangeListener(new Dots.DotsChangeListener() {
+        dotModel.setDotsChangeListener(new Dots.DotsChangeListener() {
             @Override public void onDotsChange(Dots dots) {
                 Dot d = dots.getLastDot();
                 // This code makes the UI unacceptably unresponsive.
@@ -300,6 +235,8 @@ public class TouchMe extends Activity implements OnTickListener {
         getMenuInflater().inflate(R.menu.simple_menu, menu);
         return true;
     }
+
+
     public void updateScore(int score1)
     {
         // UI adapter responsibility to schedule incoming events on UI thread
@@ -308,7 +245,7 @@ public class TouchMe extends Activity implements OnTickListener {
             public void run() {
                 final TextView tvS = (TextView) findViewById(R.id.level);
 
-                final int score1 = score; //% Constants.SEC_PER_MIN; allows for timer to go up to 99.
+                final int score1 = score;
 
                 tvS.setText(Integer.toString(score1));
 
@@ -324,7 +261,7 @@ public class TouchMe extends Activity implements OnTickListener {
             public void run() {
                 final TextView tvS = (TextView) findViewById(R.id.time);
 
-                final int time = time1; //% Constants.SEC_PER_MIN; allows for timer to go up to 99.
+                final int time = time1;
 
                 tvS.setText(Integer.toString(time));
 

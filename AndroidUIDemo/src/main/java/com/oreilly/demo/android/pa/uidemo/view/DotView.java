@@ -82,12 +82,7 @@ public int getIndexY(float y)
     //Log.d(TAG, "transformed y: " + yCalc);
     return monsterIndexY;
 }
-
-
-
-
-
-    @Override protected void onDraw(Canvas canvas) {//use a bool to check if grid isDrawn. establish set of monsters and have them drawn each time.
+@Override protected void onDraw(Canvas canvas) {//use a bool to check if grid isDrawn. establish set of monsters and have them drawn each time.
         Paint paint = new Paint();
         paint.setStyle(Style.STROKE);
         paint.setColor(Color.BLACK);
